@@ -1,13 +1,9 @@
-import { asyncRequestHandler, log } from "../../decorators";
+import express from 'express';
+import { HelloHandler } from './hello.handler';
 
-export class HelloController {
-  @log({ query: ["hello", "world"] })
-  hello(req, res, next) {
-    return res.send("hello world from route /hello");
-  }
+const router = express.Router();
 
-  @asyncRequestHandler
-  async reject(req, res, next) {
-    return Promise.reject("no");
-  }
-}
+router.get('/', HelloHandler.hello);
+router.get('/error', HelloHandler.reject);
+
+export default router;
